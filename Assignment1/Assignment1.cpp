@@ -6,6 +6,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+	cout << "Make test" << endl;
   char ch;
   ifstream sourceCodeFile;
   LexicalAnalyzer *la;
