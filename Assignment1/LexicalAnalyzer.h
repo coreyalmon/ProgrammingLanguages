@@ -10,11 +10,12 @@ class LexicalAnalyzer
 {
 	private:
 		ifstream *sourceCodeFile;
-		typedef struct Data  
+
+		struct Data  
 		{	
-			char last_char;
-			int offset;
-			string next_line;			
+			char curr_char;
+			int pos = -1;
+			string curr_line;			
 		} _data;
 	public:
     		LexicalAnalyzer(ifstream*);
