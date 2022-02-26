@@ -13,9 +13,9 @@ class LexicalAnalyzer
 
 		struct Data  
 		{	
-			char curr_char;
-			int pos = -1;
-			string curr_line;			
+			char cur_char;
+			int cur_pos = -1;
+			string cur_line;			
 		} _data;
 	public:
     		LexicalAnalyzer(ifstream*);
