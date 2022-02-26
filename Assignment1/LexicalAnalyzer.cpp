@@ -12,20 +12,30 @@ LexicalAnalyzer::LexicalAnalyzer(ifstream *scf)
 
 bool LexicalAnalyzer::isEOF()
 {
-	return sourceCodeFile->eof();
-	
+	sourceCodeFile->seekg(0, sourceCodeFile->cur);
+	int curr = sourceCodeFile->tellg();
+
+	sourceCodeFile->seekg(0, sourceCodeFile->end);
+	int len = sourceCodeFile->tellg();
+
+	sourceCodeFile->seekg(curr, sourceCodeFile->beg);
+
+	return curr == len;
 }
+
 
 char LexicalAnalyzer::getChar()
 {
 	_data.pos+=1;
 	
-	cout << "1\n";
-	if(sourceCodeFile->gcount() == 0)
+	//cout << "gcount is: " << sourceCodeFile->gcount() << endl;	
+	if(sourceCodeFile->gcount() == 0) {
 		this->readNextLine();
+	}
 	
-	if(_data.pos > (sizeof(_data.curr_line)/sizeof(string))) 
+	if(_data.pos >  _data.curr_line.length()-1) 
 	{
+		_data.curr_line = "";
         	this->readNextLine();
 		_data.pos = 0;
 	}
@@ -37,16 +47,14 @@ char LexicalAnalyzer::getChar()
 // then
 void LexicalAnalyzer::readNextLine()
 {
-	cout << "2\n";
+	
 	char * buff = new char [1];
 	while(!this->isEOF())
 	{
-	cout << "3\n";
 		sourceCodeFile->read(buff, 1);
 		_data.curr_line += buff[0];
 		if(buff[0] == '\n')
 			return;	
 	}
 }
-
 // run a file only using getchar (printing results) to see if it iterates through whole file

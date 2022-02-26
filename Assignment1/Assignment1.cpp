@@ -15,14 +15,14 @@ int main(int argc, char *argv[])
   {
     la = new LexicalAnalyzer(&sourceCodeFile);
     while (!la->isEOF())
-    {
+    {   
       ch = la->getChar();
-      cout << ch;
+      cout << ch; 
     }
     delete la;
   }
-  else
-    printf("ERROR - cannot open input file \n");
-
+  else 
+    printf("ERROR - cannot open input file \n");	
+	
   return 0;
 }
