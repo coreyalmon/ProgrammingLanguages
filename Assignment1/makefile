@@ -15,5 +15,6 @@ move:
 	mv *.o Objectfiles 
 
 clean:
-	rm -r  Objectfiles 
+	rm -r  Objectfiles
+	rm .*.swp 
 	rm Assignment1
