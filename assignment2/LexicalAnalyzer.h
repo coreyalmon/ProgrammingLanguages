@@ -14,7 +14,7 @@ class LexicalAnalyzer
 		struct Data  
 		{	
 			char cur_char;
-			int cur_pos;
+			int cur_pos = -1;
 			string cur_line;			
 		} _data;
 	public:

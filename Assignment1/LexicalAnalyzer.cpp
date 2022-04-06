@@ -4,51 +4,45 @@
 #include "LexicalAnalyzer.h"
 
 using namespace std;
-
+// CODE HAS BEEN EDITED PAST SUBMISSION. IF YOU WANT SUBMISSION CODE, UNZIP ALMONTE_COREY_ASSIGNMENT1.ZIP
+// Nothing in this code protects against printing NULL at end (so use submission code) as Assignment1.cpp does not
+// protect against printing the null character at the end. (see ./Assignment test.txt > ans.txt)
+// This current code is just meant to better reflect how istream does it.
 LexicalAnalyzer::LexicalAnalyzer(ifstream *scf)
 {
 	sourceCodeFile = scf;
+	this->readNextLine();
+	
 }
 
 bool LexicalAnalyzer::isEOF()
-{
-	sourceCodeFile->seekg(0, sourceCodeFile->cur);
-	int cur = sourceCodeFile->tellg();
-
-	sourceCodeFile->seekg(0, sourceCodeFile->end);
-	int len = sourceCodeFile->tellg();
-
-	sourceCodeFile->seekg(cur, sourceCodeFile->beg);
-
-	return cur >= len;
+{	
+	return ((sourceCodeFile->rdstate() & ifstream::eofbit) != 0);
+	
 }
 
 char LexicalAnalyzer::getChar()
 {
-	_data.cur_pos+=1;
 	
-	if(sourceCodeFile->gcount() == 0) this->readNextLine();
-	
-	if(_data.cur_pos >  _data.cur_line.length()-1) 
+	if(_data.cur_pos > _data.cur_line.length()-1) 
 	{
 		_data.cur_line = "";
         	this->readNextLine();
 		_data.cur_pos = 0;
 	}
 
-	_data.cur_char = _data.cur_line[_data.cur_pos];	
+	_data.cur_char = _data.cur_line[_data.cur_pos];
+	_data.cur_pos+=1;	
+
 	return _data.cur_char;
 }
 
 void LexicalAnalyzer::readNextLine()
-{	
-	char * buff = new char [1];
-	while(!this->isEOF())
-	{
-		sourceCodeFile->read(buff, 1);
-		_data.cur_line += buff[0];
-		if(buff[0] == '\n') return;	
-	}
-
-	delete[] buff;
+{
+		// If read()/getline() reads past the last byte, the eofbit is triggered and eof() returns true
+		if(this->isEOF()) 
+			return;
+		char line[256];
+		sourceCodeFile->getline(line, 256);
+		_data.cur_line = _data.cur_line + line + "\n";	
 }
