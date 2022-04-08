@@ -1,0 +1,13 @@
+test
+identifier;
++
+ =
+-
+:
+:=
+end
+identifiername69
+1234
+1.234
+:==;
+~
